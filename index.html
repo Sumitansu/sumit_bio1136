@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumit's Website</title>
+    <style>
+        /* CSS styles go here */
+        /* For demonstration, you can style as per your preference */
+        /* Remember to link external CSS file if you prefer */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light gray background */
+            color: #ffd700;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.8); /* Darker background */
+            color: #ffd700;
+            padding: 10px 20px;
+            z-index: 1000; /* Ensure it stays on top */
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        nav:hover {
+            background-color: rgba(0, 0, 0, 1); /* Full black background on hover */
+        }
+
+        .progress-bar {
+            background-color: #111; /* Darker background for progress bar */
+            height: 10px;
+            width: 70%; /* Adjusted width */
+            border-radius: 5px; /* Slimmer border */
+            overflow: hidden;
+            margin-top: 5px;
+            position: relative;
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        .progress {
+            background-color: #ffd700; /* Gold color for progress */
+            height: 100%;
+            width: 0%; /* Start with 0% width */
+            transition: width 0.5s; /* Add transition effect */
+        }
+
+        .faded-area {
+            position: absolute;
+            bottom: -5px; /* Adjusted position */
+            left: 0;
+            width: 100%;
+            height: 20px; /* Adjusted height */
+            background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.8)); /* Faded effect */
+            z-index: -1; /* Behind other content */
+        }
+
+        .menu ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center; /* Align center */
+        }
+
+        .menu ul li {
+            margin-right: 20px;
+        }
+
+        main {
+            padding-top: 60px; /* Adjust to accommodate fixed navbar */
+            padding-bottom: 20px;
+        }
+
+        section {
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease; /* Add fade-in animation */
+            background-color: #111; /* Dark background */
+            border-radius: 10px; /* Rounded corners */
+            padding: 20px; /* Add padding */
+            position: relative; /* Added position */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        #about {
+            text-align: center; /* Align center */
+            margin-bottom: 30px; /* Add margin bottom */
+            padding-top: 40px; /* Add padding top */
+        }
+
+        #about div {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        #about div img {
+            width: 150px; /* Adjusted width */
+            margin: 0 20px;
+            border-radius: 10px; /* Add border radius */
+            border: 2px solid #ffd700; /* Add border with gold color */
+        }
+
+        .games-list li img {
+            width: 100px; /* Adjusted width */
+            margin-right: 10px; /* Adjusted margin */
+        }
+
+        .games-list li {
+            margin-bottom: 10px;
+        }
+
+        .comment-form {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px; /* Add margin bottom */
+            animation: slideInDown 1s ease; /* Add slide-in animation */
+        }
+
+        @keyframes slideInDown {
+            from {
+                transform: translateY(-100%);
+            }
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .comment-input {
+            width: calc(100% - 100px);
+            padding: 5px;
+            margin-right: 10px;
+            border-radius: 5px;
+            border: 1px solid #ffd700; /* Add border with gold color */
+            background-color: rgba(255, 215, 0, 0.1); /* Dark gold background */
+            color: #ffd700;
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        .comment-input:focus {
+            background-color: rgba(255, 215, 0, 0.2); /* Lighten background on focus */
+        }
+
+        .comment-submit {
+            padding: 5px 10px;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.5s; /* Add transition effect */
+        }
+
+        .comment-submit:hover {
+            background-color: #45a049;
+        }
+
+        .comment {
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: #333; /* Dark background */
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ffd700; /* Add border with gold color */
+        }
+
+        .comment span {
+            flex: 1;
+        }
+
+        .comment-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .comment-action {
+            margin-left: 10px;
+            cursor: pointer;
+            border: none; /* Remove border */
+            background-color: transparent; /* Transparent background */
+            color: #ffd700;
+        }
+
+        .comment-like {
+            cursor: pointer;
+            border: none; /* Remove border */
+            background-color: transparent; /* Transparent background */
+            color: #ffd700;
+            font-size: 1.2em; /* Increase font size */
+        }
+
+        .comment-like.liked {
+            color: #ffd700; /* Change color to golden */
+        }
+
+        .like-count {
+            margin-right: 5px; /* Adjust margin */
+            color: #ffd700;
+        }
+
+        .filter-button {
+            padding: 5px 10px;
+            background-color: transparent;
+            color: #ffd700;
+            border: 1px solid #ffd700; /* Add border with gold color */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.5s, color 0.5s; /* Add transition effect */
+        }
+
+        .filter-button:hover {
+            background-color: #ffd700; /* Change background on hover */
+            color: #000; /* Change text color on hover */
+        }
+
+        .filter-button.active {
+            background-color: #ffd700; /* Change background for active button */
+            color: #000; /* Change text color for active button */
+        }
+
+        /* Pop-up modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #333;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #ffd700;
+            border-radius: 5px;
+            width: 50%;
+            transition: transform 0.5s ease;
+        }
+
+        .modal-content input[type="text"],
+        .modal-content input[type="password"],
+        .modal-content button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ffd700;
+            background-color: rgba(255, 215, 0, 0.1);
+            color: #ffd700;
+        }
+
+        .modal-content input[type="text"]:focus,
+        .modal-content input[type="password"]:focus {
+            background-color: rgba(255, 215, 0, 0.2);
+        }
+
+        .modal-content button {
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.5s;
+        }
+
+        .modal-content button:hover {
+            background-color: #45a049;
+        }
+
+        .close {
+            color: #ffd700;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.5s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #ccc;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* New styles for the buttons */
+        .signup-button,
+        .login-button {
+            padding: 10px 20px;
+            background-color: #000;
+            color: #ffd700;
+            border: 2px solid #ffd700;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.5s, color 0.5s;
+        }
+
+        .signup-button:hover,
+        .login-button:hover {
+            background-color: #ffd700;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+        <div class="menu">
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="https://discord.gg/kqzjaR3G">Discord</a></li>
+                <li><a href="https://www.youtube.com/channel/UCPjeroDMFvjNIn1iXd9J32Q">YouTube</a></li>
+                <li><button class="signup-button" onclick="openModal('signupModal')">Sign Up</button></li>
+                <li><button class="login-button" onclick="openModal('loginModal')">Log In</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <!-- About Section -->
+        <section id="about">
+            <h2>About Me</h2>
+            <div>
+                <!-- Add your photo here -->
+                <img src="img\logo for speedabraker.jpg" alt="Sumit's Photo">
+            </div>
+            <div>
+                <!-- Add your Discord photo here -->
+                <img src="img\Designer.png" alt="Server DP">
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2>Contact Me</h2>
+            <p>Email: mohantasamaresh62@gmail.com</p>
+            <p>For quicker replies, join my <a href="https://discord.gg/kqzjaR3G">Discord server</a>.</p>
+        </section>
+
+        <!-- Games Section -->
+        <section id="games">
+            <h2>Games I Play</h2>
+            <ul class="games-list">
+                <li>
+                    <img src="img\roblox.jpeg" alt="Roblox"> 
+                    <span>Roblox</span>
+                </li>
+                <li>
+                    <img src="img\minecraft.jpeg" alt="Minecraft"> 
+                    <span>Minecraft</span>
+                </li>
+                <li>
+                    <img src="img\gta 5.jpeg" alt="GTA 5"> 
+                    <span>GTA 5</span>
+                </li>
+                <!-- Add more games as needed -->
+            </ul>
+        </section>
+
+        <!-- Review Section -->
+        <section id="review">
+            <h2>Comments</h2>
+            <!-- Add Comment Form -->
+            <form id="comment-form" class="comment-form" onsubmit="submitForm(event)">
+                <input type="text" id="comment-input" class="comment-input" placeholder="Write a comment" name="comment">
+                <button type="submit" class="comment-submit">Comment</button>
+            </form>
+            <!-- Display all the comments here -->
+            <div class="all-comments">
+                <!-- Comments will be dynamically added here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Sign Up Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2>Sign Up</h2>
+            <input type="text" id="signupUsername" placeholder="Username">
+            <input type="password" id="signupPassword" placeholder="Password">
+            <button onclick="signup()">Sign Up</button>
+        </div>
+    </div>
+
+    <!-- Log In Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Log In</h2>
+            <input type="text" id="loginUsername" placeholder="Username">
+            <input type="password" id="loginPassword" placeholder="Password">
+            <button onclick="login()">Log In</button>
+        </div>
+    </div>
+
+    <script>
+        // Array to hold comments
+        let comments = JSON.parse(localStorage.getItem('comments')) || [];
+        // Array to hold users
+        let users = JSON.parse(localStorage.getItem('users')) || [];
+        // Current user
+        let currentUser = '';
+
+        // Function to open modal
+        function openModal(id) {
+            document.getElementById(id).style.display = "block";
+        }
+
+        // Function to close modal
+        function closeModal(id) {
+            document.getElementById(id).style.display = "none";
+        }
+
+        // Function to handle signup
+        function signup() {
+            let username = document.getElementById('signupUsername').value;
+            let password = document.getElementById('signupPassword').value;
+            if (username && password) {
+                users.push({ username, password });
+                currentUser = username;
+                localStorage.setItem('users', JSON.stringify(users));
+                closeModal('signupModal');
+            } else {
+                alert('Please enter username and password');
+            }
+        }
+
+        // Function to handle login
+        function login() {
+            let username = document.getElementById('loginUsername').value;
+            let password = document.getElementById('loginPassword').value;
+            let user = users.find(u => u.username === username && u.password === password);
+            if (user) {
+                currentUser = username;
+                closeModal('loginModal');
+            } else {
+                alert('Invalid username or password');
+            }
+        }
+
+        // Function to submit form
+        function submitForm(event) {
+            event.preventDefault();
+            let commentInput = document.getElementById('comment-input');
+            let comment = commentInput.value;
+            if (comment && currentUser) {
+                comments.push({ user: currentUser, comment, likes: 0 });
+                localStorage.setItem('comments', JSON.stringify(comments));
+                displayComments();
+                commentInput.value = '';
+            } else {
+                alert('Please log in to comment');
+            }
+        }
+
+        // Function to display comments
+        function displayComments() {
+            let commentsContainer = document.querySelector('.all-comments');
+            commentsContainer.innerHTML = '';
+            comments.forEach((comment, index) => {
+                let commentElement = document.createElement('div');
+                commentElement.classList.add('comment');
+                let userSpan = document.createElement('span');
+                userSpan.textContent = comment.user + ': ';
+                let commentSpan = document.createElement('span');
+                commentSpan.textContent = comment.comment;
+                let likeCountSpan = document.createElement('span');
+                likeCountSpan.classList.add('like-count');
+                likeCountSpan.textContent = comment.likes + ' likes';
+                let likeButton = document.createElement('button');
+                likeButton.classList.add('comment-like');
+                likeButton.textContent = 'Like';
+                likeButton.onclick = function () {
+                    likeComment(index);
+                };
+                let deleteButton = document.createElement('button');
+                deleteButton.classList.add('comment-action');
+                deleteButton.textContent = 'Delete';
+                deleteButton.onclick = function () {
+                    deleteComment(index);
+                };
+                commentElement.appendChild(userSpan);
+                commentElement.appendChild(commentSpan);
+                commentElement.appendChild(likeCountSpan);
+                commentElement.appendChild(likeButton);
+                if (currentUser === comment.user) {
+                    commentElement.appendChild(deleteButton);
+                }
+                commentsContainer.appendChild(commentElement);
+            });
+        }
+
+        // Function to like a comment
+        function likeComment(index) {
+            comments[index].likes++;
+            localStorage.setItem('comments', JSON.stringify(comments));
+            displayComments();
+        }
+
+        // Function to delete a comment
+        function deleteComment(index) {
+            comments.splice(index, 1);
+            localStorage.setItem('comments', JSON.stringify(comments));
+            displayComments();
+        }
+
+        // Display comments when the page loads
+        window.onload = displayComments;
+    </script>
+</body>
+</html>
